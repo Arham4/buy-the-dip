@@ -1,6 +1,10 @@
 import fear_and_greed
 import json
 import urllib.request
+import finnhub
+
+config = json.load(open('config.json', mode='r'))
+finnhub_client = finnhub.Client(api_key=config['finnhub_api_key'])
 
 
 def stock_fear_index():
@@ -31,7 +35,10 @@ def crypto_fear_index():
 
 
 def rsi_index(ticker):
-    return 100  # dummy value
+    # todo to
+    rsi_data = finnhub_client.technical_indicator(symbol=ticker, resolution='D', _from=1483228800, to=1636761600, indicator='rsi', indicator_fields={"timeperiod": 14})
+    rsi_datum = rsi_data['rsi']
+    return rsi_datum[len(rsi_datum) - 1]
 
 
 def macd_index(ticker):
