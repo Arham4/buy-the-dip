@@ -36,13 +36,19 @@ def crypto_fear_index():
 
 def rsi_index(ticker):
     # todo to
-    rsi_data = finnhub_client.technical_indicator(symbol=ticker, resolution='D', _from=1483228800, to=1636761600, indicator='rsi', indicator_fields={"timeperiod": 14})
+    rsi_data = finnhub_client.technical_indicator(symbol=ticker, resolution='D', _from=1483228800, to=1636761600,
+                                                  indicator='rsi', indicator_fields={"timeperiod": 14, })
     rsi_datum = rsi_data['rsi']
     return rsi_datum[len(rsi_datum) - 1]
 
 
 def macd_index(ticker):
-    return 100  # dummy value
+    # todo to
+    macd_data = finnhub_client.technical_indicator(symbol=ticker, resolution='D', _from=1483228800, to=1636761600,
+                                                   indicator='macd',
+                                                   indicator_fields={"macd": 12, "macdSignal": 9, "macdHist": 26, })
+    macd_datum = macd_data['macd']
+    return macd_datum[len(macd_datum) - 1]
 
 
 def stochastic_index(ticker):
