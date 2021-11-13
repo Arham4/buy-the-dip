@@ -46,8 +46,8 @@ def macd_index(ticker):
     # todo to
     macd_data = finnhub_client.technical_indicator(symbol=ticker, resolution='D', _from=1483228800, to=1636761600,
                                                    indicator='macd',
-                                                   indicator_fields={"macd": 12, "macdSignal": 9, "macdHist": 26, })
-    macd_datum = macd_data['macd']
+                                                   indicator_fields={})
+    macd_datum = macd_data['macdHist']
     return macd_datum[len(macd_datum) - 1]
 
 
