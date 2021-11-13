@@ -56,7 +56,8 @@ def stochastic_index(ticker):
     stochastic_data = finnhub_client.technical_indicator(symbol=ticker, resolution='D', _from=1483228800, to=1636761600,
                                                          indicator='stoch',
                                                          indicator_fields={"fastkperiod": 14, })
-    return stochastic_data
+    stochastic_datum = stochastic_data['slowd']
+    return stochastic_datum
 
 
 def google_trends_value(ticker):
