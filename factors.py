@@ -52,7 +52,11 @@ def macd_index(ticker):
 
 
 def stochastic_index(ticker):
-    return 100  # dummy value
+    # todo to
+    stochastic_data = finnhub_client.technical_indicator(symbol=ticker, resolution='D', _from=1483228800, to=1636761600,
+                                                         indicator='stoch',
+                                                         indicator_fields={"fastkperiod": 14, })
+    return stochastic_data
 
 
 def google_trends_value(ticker):
