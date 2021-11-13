@@ -57,7 +57,7 @@ def stochastic_index(ticker):
                                                          indicator='stoch',
                                                          indicator_fields={"fastkperiod": 14, })
     stochastic_datum = stochastic_data['slowd']
-    return stochastic_datum
+    return stochastic_datum[len(stochastic_datum) - 1]
 
 
 def google_trends_value(ticker):
