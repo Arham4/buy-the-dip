@@ -1,4 +1,6 @@
 import fear_and_greed
+import json
+import urllib.request
 
 
 def stock_fear_index():
@@ -15,7 +17,17 @@ def stock_fear_index():
 
 
 def crypto_fear_index():
-    return 100  # dummy value
+    """Gets the crypto fear index as per Alternative's website.
+
+    :returns a number from 0 to 100.
+             0 - 24 = extremely fearful
+             25 - 49 = fear
+             50 = neutral
+             51 - 74 = greed
+             75 - 100 = extremely greedy
+    """
+    fear_index_json = json.loads(urllib.request.urlopen('https://api.alternative.me/fng/?limit=1').read())
+    return int(fear_index_json['data'][0]['value'])
 
 
 def rsi_index(ticker):
