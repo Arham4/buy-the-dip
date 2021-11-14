@@ -6,8 +6,16 @@ import finnhub
 config = json.load(open('config.json', mode='r'))
 finnhub_client = finnhub.Client(api_key=config['finnhub_api_key'])
 
+dummy_value = 100
+dummy_length = 50
+epoch_today = 1636761600
 
-def get_stock_fear_index():
+
+def get_stock_fear_indices(from_epoch, to_epoch):
+    return [dummy_value] * dummy_length
+
+
+def get_recent_stock_fear_index(from_epoch):
     """Gets the stock fear index as per CNN's website.
 
     :returns a number from 0 to 100.
@@ -20,7 +28,11 @@ def get_stock_fear_index():
     return fear_and_greed.get().value
 
 
-def get_crypto_fear_index():
+def get_crypto_fear_indices(from_epoch, to_epoch):
+    return [dummy_value] * dummy_length
+
+
+def get_recent_crypto_fear_index(from_epoch):
     """Gets the crypto fear index as per Alternative's website.
 
     :returns a number from 0 to 100.
@@ -34,43 +46,77 @@ def get_crypto_fear_index():
     return int(fear_index_json['data'][0]['value'])
 
 
-def get_rsi_index(ticker):
-    # todo to
-    rsi_data = finnhub_client.technical_indicator(symbol=ticker, resolution='D', _from=1483228800, to=1636761600,
+def get_rsi_indices(ticker, from_epoch, to_epoch):
+    rsi_data = finnhub_client.technical_indicator(symbol=ticker, resolution='D', _from=from_epoch, to=to_epoch,
                                                   indicator='rsi', indicator_fields={"timeperiod": 14, })
     rsi_datum = rsi_data['rsi']
-    return rsi_datum[len(rsi_datum) - 1]
+    while len(rsi_datum) < dummy_length:
+        rsi_datum.insert(0, dummy_value)
+    return rsi_datum
 
 
-def get_macd_index(ticker):
-    # todo to
-    macd_data = finnhub_client.technical_indicator(symbol=ticker, resolution='D', _from=1483228800, to=1636761600,
+def get_recent_rsi_index(ticker, from_epoch):
+    rsi_datum = get_rsi_indices(ticker, from_epoch, epoch_today)
+    return rsi_datum[-1]
+
+
+def get_macd_indices(ticker, from_epoch, to_epoch):
+    macd_data = finnhub_client.technical_indicator(symbol=ticker, resolution='D', _from=from_epoch, to=to_epoch,
                                                    indicator='macd',
                                                    indicator_fields={})
     macd_datum = macd_data['macdSignal']
-    return macd_datum[len(macd_datum) - 1]
+    while len(macd_datum) < dummy_length:
+        macd_datum.insert(0, dummy_value)
+    return macd_datum
 
 
-def get_stochastic_index(ticker):
-    # todo to
-    stochastic_data = finnhub_client.technical_indicator(symbol=ticker, resolution='D', _from=1483228800, to=1636761600,
+def get_recent_macd_index(ticker, from_epoch):
+    macd_datum = get_macd_indices(ticker, from_epoch, epoch_today)
+    return macd_datum[-1]
+
+
+def get_stochastic_indices(ticker, from_epoch, to_epoch):
+    stochastic_data = finnhub_client.technical_indicator(symbol=ticker, resolution='D', _from=from_epoch, to=to_epoch,
                                                          indicator='stoch',
                                                          indicator_fields={"fastkperiod": 14, })
     stochastic_datum = stochastic_data['slowd']
-    return stochastic_datum[len(stochastic_datum) - 1]
+    while len(stochastic_datum) < dummy_length:
+        stochastic_datum.insert(0, dummy_value)
+    return stochastic_datum[-1]
 
 
-def get_google_trends_value(ticker):
-    return 100  # dummy value
+def get_recent_stochastic_indices(ticker, from_epoch):
+    stochastic_datum = get_stochastic_indices(ticker, from_epoch, epoch_today)
+    return stochastic_datum[-1]
 
 
-def get_twitter_value(ticker):
-    return 100  # dummy value
+def get_google_trends_values(ticker, from_epoch, to_epoch):
+    return [dummy_value] * dummy_length
 
 
-def get_reddit_value(ticker):
-    return 100  # dummy value
+def get_recent_google_trends_value(ticker, from_epoch):
+    return dummy_value
 
 
-def get_volatility_value(ticker):
-    return 100  # dummy value
+def get_twitter_values(ticker, from_epoch, to_epoch):
+    return [dummy_value] * dummy_length
+
+
+def get_recent_twitter_value(ticker, from_epoch):
+    return dummy_value
+
+
+def get_reddit_values(ticker, from_epoch, to_epoch):
+    return [dummy_value] * dummy_length
+
+
+def get_recent_reddit_value(ticker, from_epoch):
+    return dummy_value
+
+
+def get_volatility_values(ticker, from_epoch, to_epoch):
+    return [dummy_value] * dummy_length
+
+
+def get_recent_volatility_value(ticker, from_epoch):
+    return dummy_value
