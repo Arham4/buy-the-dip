@@ -158,9 +158,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         width: MediaQuery.of(context).size.width * 0.4,
                         child: ElevatedButton(
                             onPressed: () {
-                              if (_emailController.text != "" &&
+                              if (_emailController.text.isNotEmpty &&
                                   _emailController.text.contains("@") &&
-                                  _passwordController.text != "") {
+                                  _passwordController.text.isNotEmpty) {
                                 Navigator.pushReplacementNamed(
                                     context, '/home');
                               }
