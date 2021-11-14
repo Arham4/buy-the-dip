@@ -13,7 +13,9 @@ class MyApp extends StatelessWidget {
       title: 'Buy The Dip',
       initialRoute: 'Login Page',
       routes: {
-        'Login Page': (context) => const MyHomePage(title: 'Login Page',),
+        'Login Page': (context) => const MyHomePage(
+              title: 'Login Page',
+            ),
         '/home': (context) => const Home(),
         '/recommendations': (context) => const Recommendations(),
         '/highestperformers': (context) => const HighestPerformers(),
@@ -40,6 +42,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -153,7 +158,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         width: MediaQuery.of(context).size.width * 0.4,
                         child: ElevatedButton(
                             onPressed: () {
-                              Navigator.pushNamed(context, '/home');
+                              if (emailController.text != "" &&
+                                  emailController.text.contains("@") &&
+                                  passwordController.text != "") {
+                                Navigator.pushReplacementNamed(
+                                    context, '/home');
+                              }
                             },
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
@@ -294,9 +304,11 @@ class Watchlist extends StatelessWidget {
     );
   }
 }
+
 //
 class StocksFollowing extends StatelessWidget {
   const StocksFollowing({Key? key}) : super(key: key);
+
 //
   @override
   Widget build(BuildContext context) {
