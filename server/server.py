@@ -6,7 +6,7 @@ import json as jfile
 
 app = Flask(__name__)
 stock_data = jfile.load(open('dump2.json', mode='r'))
-
+top_data = jfile.load(open('highest.json', mode='r'))
 
 @app.route('/stock/<ticker>')
 def func(ticker):
@@ -15,6 +15,10 @@ def func(ticker):
 @app.route('/recommendations/<count>')
 def func2(count):
     return recommendations(stock_data,count)
+
+@app.route('/top-performers')
+def func3(count):
+    return top_data
 
 epoch_2017 = 1483228800
 epoch_today = 1636761600
@@ -116,17 +120,26 @@ def classification(weights, examples):
         return ('Buy', predicted_value)
     return ('Hold', predicted_value)
 
-def top_performers(tickers, count):
-    percent_increase = {}
-    prices = factors.get_price_values(tickers,epoch_2017,epoch_today)
-    percent_increase[tickers] = (prices[-1]-prices[-2])/prices[-2]
-    sorted_dict = {k: v for k, v in sorted(percent_increase.items(), key=lambda item: item[tickers])}
-    result = {}
-    for key in sorted_dict.keys():
-        if i == count: # change 3 to be however many i wanted
-            break
-        result[key] = sorted_dict[key]
-    return result
+def top_performers(json_file, count):
+    recommendation = []
+    index = []
+    output = {}
+    for key in json_file:
+        prices = factors.get_price_values(key,epoch_2017,epoch_today)
+        value = (prices[-1]-prices[-2])/prices[-2]
+        if len(recommendation) < count:
+            recommendation.append(value)
+            index.append(key)
+        elif min(recommendation) < value:
+            least = 0
+            for i in range(len(recommendation)):
+                if recommendation[i] == min(recommendation):
+                    least = i
+            index[least] = key
+            recommendation[least] = value
+    for i in index:
+        output[i] = json_file[i]
+    return output
 
 
 
@@ -180,8 +193,7 @@ def recommendations(json_file,count):
 
  
 if __name__ == '__main__':
-    
-    # app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0')
     # data = []
     # stocks = load_stocks('data/s&p500_stock_names.txt')
     # stocks = ['GOOG', 'TSLA', 'AAPL', 'A']
