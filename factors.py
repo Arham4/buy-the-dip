@@ -1,7 +1,7 @@
-import math
-import fear_and_greed
 import json
+import math
 import urllib.request
+
 import finnhub
 
 config = json.load(open('config.json', mode='r'))
@@ -26,7 +26,7 @@ def get_recent_stock_fear_index(from_epoch):
              51 - 74 = greed
              75 - 100 = extremely greedy
     """
-    return fear_and_greed.get().value
+    return dummy_value
 
 
 def get_crypto_fear_indices(from_epoch, to_epoch):
