@@ -67,7 +67,7 @@ class _HomeState extends State<Home> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(20.0),
                     child: Image.network(
-                      _recommendedStocks[key]['Logo'],
+                      _topPerformers[key]['Logo'],
                       height: 35.0,
                       width: 35.0,
                     ),
@@ -76,10 +76,15 @@ class _HomeState extends State<Home> {
                     key,
                     style: const TextStyle(color: Colors.black),
                   ),
-                  Text(
-                    _recommendedStocks[key]['Market Prediction'],
-                    style: TextStyle(color: _recommendedStocks[key]['Market Prediction'] == "Buy" ? Colors.green : _recommendedStocks[key]['Market Prediction'] == "Sell" ? Colors.red : Colors.black)
-                  )
+                  Text(_topPerformers[key]['Market Prediction'],
+                      style: TextStyle(
+                          color:
+                              _topPerformers[key]['Market Prediction'] == "Buy"
+                                  ? Colors.green
+                                  : _topPerformers[key]['Market Prediction'] ==
+                                          "Sell"
+                                      ? Colors.red
+                                      : Colors.black))
                 ],
               ),
             ),
@@ -120,8 +125,20 @@ class _HomeState extends State<Home> {
                   ),
                   Text(
                     key,
-                    style: const TextStyle(color: Colors.black),
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
+                  Text(_recommendedStocks[key]['Market Prediction'],
+                      style: TextStyle(
+                          color: _recommendedStocks[key]['Market Prediction'] ==
+                                  "Buy"
+                              ? Colors.green
+                              : _recommendedStocks[key]['Market Prediction'] ==
+                                      "Sell"
+                                  ? Colors.red
+                                  : Colors.black)),
                 ],
               ),
             ),
@@ -160,7 +177,7 @@ class _HomeState extends State<Home> {
                 height: 15,
                 thickness: 1.0,
               ),
-              /*const Text(
+              const Text(
                 'Top Performers',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
@@ -175,7 +192,7 @@ class _HomeState extends State<Home> {
                         scrollDirection: Axis.horizontal,
                         children: _generateTopPerformers(),
                       ),
-              ),*/
+              ),
               ElevatedButton(
                   onPressed: () {
                     Navigator.pushNamed(context, '/dashboard');
