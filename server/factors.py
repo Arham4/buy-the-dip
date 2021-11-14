@@ -28,7 +28,8 @@ def get_stock_fear_indices(from_epoch, to_epoch):
 def get_crypto_fear_indices(from_epoch, to_epoch):
     days_between = math.ceil((to_epoch - from_epoch) / 86400)
     fear_index_json = json.loads(
-        urllib.request.urlopen('https://api.alternative.me/fng/?limit=' + str(days_between), cafile=certifi.where()).read())
+        urllib.request.urlopen('https://api.alternative.me/fng/?limit=' + str(days_between),
+                               cafile=certifi.where()).read())
     return list(map(lambda day: int(day['value']), fear_index_json['data']))[::-1]
 
 
@@ -76,6 +77,9 @@ def get_reddit_values(ticker, from_epoch, to_epoch):
 def get_volatility_values(ticker, from_epoch, to_epoch):
     return [dummy_value] * dummy_length
 
+
 def get_market_cap_and_logo(ticker):
     market_cap = finnhub_client.company_profile2(symbol=ticker)
-    return (market_cap['marketCapitalization'],market_cap['logo'],market_cap['name'])
+    if 'marketCapitalization' not in market_cap:
+        return None, None, None
+    return market_cap['marketCapitalization'], market_cap['logo'], market_cap['name']
