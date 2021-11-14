@@ -24,7 +24,7 @@ def get_crypto_fear_indices(from_epoch, to_epoch):
     days_between = math.ceil((to_epoch - from_epoch) / 86400)
     fear_index_json = json.loads(
         urllib.request.urlopen('https://api.alternative.me/fng/?limit=' + str(days_between)).read())
-    return list(map(lambda day: day['value'], fear_index_json['data']))[::-1]
+    return list(map(lambda day: int(day['value']), fear_index_json['data']))[::-1]
 
 
 def get_rsi_indices(ticker, from_epoch, to_epoch):
