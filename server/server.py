@@ -17,7 +17,7 @@ def func2(count):
     return recommendations(stock_data,count)
 
 @app.route('/top-performers')
-def func3(count):
+def func3():
     return top_data
 
 epoch_2017 = 1483228800
@@ -193,7 +193,9 @@ def recommendations(json_file,count):
 
  
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    jfile.dump(top_performers(stock_data, 5), open('highest.json', mode='w+'))
+
+    # app.run(debug=True, host='0.0.0.0')
     # data = []
     # stocks = load_stocks('data/s&p500_stock_names.txt')
     # stocks = ['GOOG', 'TSLA', 'AAPL', 'A']
