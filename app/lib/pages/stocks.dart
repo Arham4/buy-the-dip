@@ -38,12 +38,7 @@ class StocksState extends State<Stocks> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Stocks'), actions: [
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.search),
-        )
-      ]),
+      appBar: AppBar(title: const Text('Stocks'), actions: const []),
       body: Center(
         child: _loadingStock
             ? Container(
