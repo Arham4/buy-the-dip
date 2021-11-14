@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Buy The Dip',
       initialRoute: 'Login Page',
+      debugShowCheckedModeBanner: false,
       routes: {
         'Login Page': (context) => const MyHomePage(
               title: 'Login Page',
