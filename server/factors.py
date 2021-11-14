@@ -74,7 +74,10 @@ def get_twitter_values(ticker, from_epoch, to_epoch):
 
 
 def get_reddit_values(ticker, from_epoch, to_epoch):
-    return reddit_sentiment[ticker]
+    if ticker not in reddit_sentiment:
+        return [dummy_value] * dummy_length
+    else:
+        return reddit_sentiment[ticker]
 
 
 def get_volatility_values(ticker, from_epoch, to_epoch):
