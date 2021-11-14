@@ -12,6 +12,10 @@ dummy_length = 50
 epoch_today = 1636761600
 
 
+def get_price_values(ticker, from_epoch, to_epoch):
+    return finnhub_client.stock_candles(ticker, 'D', from_epoch, to_epoch)
+
+
 def get_stock_fear_indices(from_epoch, to_epoch):
     return [dummy_value] * dummy_length
 
@@ -31,7 +35,8 @@ def get_recent_stock_fear_index(from_epoch):
 
 def get_crypto_fear_indices(from_epoch, to_epoch):
     days_between = math.ceil((to_epoch - from_epoch) / 86400)
-    fear_index_json = json.loads(urllib.request.urlopen('https://api.alternative.me/fng/?limit=' + str(days_between)).read())
+    fear_index_json = json.loads(
+        urllib.request.urlopen('https://api.alternative.me/fng/?limit=' + str(days_between)).read())
     return list(map(lambda day: day['value'], fear_index_json['data']))[::-1]
 
 
