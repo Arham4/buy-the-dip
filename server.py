@@ -16,7 +16,7 @@ epoch_2017 = 1483228800
 
 def buy_dip(ticker, crypto):
     buy = []
-    if not crypto and factors.get_recent_stock_fear_index() < 50 or crypto and factors.get_recent_crypto_fear_index(epoch_2017) < 50:
+    if not crypto and factors.get_recent_stock_fear_index(epoch_2017) < 50 or crypto and factors.get_recent_crypto_fear_index(epoch_2017) < 50:
         buy.append(1)
     else:
         buy.append(0)
