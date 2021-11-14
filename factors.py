@@ -7,7 +7,7 @@ config = json.load(open('config.json', mode='r'))
 finnhub_client = finnhub.Client(api_key=config['finnhub_api_key'])
 
 
-def stock_fear_index():
+def get_stock_fear_index():
     """Gets the stock fear index as per CNN's website.
 
     :returns a number from 0 to 100.
@@ -20,7 +20,7 @@ def stock_fear_index():
     return fear_and_greed.get().value
 
 
-def crypto_fear_index():
+def get_crypto_fear_index():
     """Gets the crypto fear index as per Alternative's website.
 
     :returns a number from 0 to 100.
@@ -34,7 +34,7 @@ def crypto_fear_index():
     return int(fear_index_json['data'][0]['value'])
 
 
-def rsi_index(ticker):
+def get_rsi_index(ticker):
     # todo to
     rsi_data = finnhub_client.technical_indicator(symbol=ticker, resolution='D', _from=1483228800, to=1636761600,
                                                   indicator='rsi', indicator_fields={"timeperiod": 14, })
@@ -42,7 +42,7 @@ def rsi_index(ticker):
     return rsi_datum[len(rsi_datum) - 1]
 
 
-def macd_index(ticker):
+def get_macd_index(ticker):
     # todo to
     macd_data = finnhub_client.technical_indicator(symbol=ticker, resolution='D', _from=1483228800, to=1636761600,
                                                    indicator='macd',
@@ -51,7 +51,7 @@ def macd_index(ticker):
     return macd_datum[len(macd_datum) - 1]
 
 
-def stochastic_index(ticker):
+def get_stochastic_index(ticker):
     # todo to
     stochastic_data = finnhub_client.technical_indicator(symbol=ticker, resolution='D', _from=1483228800, to=1636761600,
                                                          indicator='stoch',
@@ -60,17 +60,17 @@ def stochastic_index(ticker):
     return stochastic_datum[len(stochastic_datum) - 1]
 
 
-def google_trends_value(ticker):
+def get_google_trends_value(ticker):
     return 100  # dummy value
 
 
-def twitter_value(ticker):
+def get_twitter_value(ticker):
     return 100  # dummy value
 
 
-def reddit_value(ticker):
+def get_reddit_value(ticker):
     return 100  # dummy value
 
 
-def volatility_value(ticker):
+def get_volatility_value(ticker):
     return 100  # dummy value

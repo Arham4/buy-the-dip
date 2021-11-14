@@ -12,35 +12,35 @@ def func(ticker):
 
 def buy_dip(ticker, crypto):
         buy = []
-        if not crypto and factors.stock_fear_index() < 50 or crypto and factors.crypto_fear_index() < 50:
+        if not crypto and factors.get_stock_fear_index() < 50 or crypto and factors.get_crypto_fear_index() < 50:
             buy.append(1)
         else:
             buy.append(0)
-        if factors.rsi_index(ticker) < 70 and factors.rsi_index(ticker) > 30: 
+        if factors.get_rsi_index(ticker) < 70 and factors.get_rsi_index(ticker) > 30:
             buy.append(1)
         else:
             buy.append(0)
-        if factors.macd_index(ticker) > 0:
+        if factors.get_macd_index(ticker) > 0:
             buy.append(1)
         else:
             buy.append(0)
-        if factors.stochastic_index(ticker) < .8 and factors.stochastic_index(ticker) > .2:
+        if factors.get_stochastic_index(ticker) < .8 and factors.get_stochastic_index(ticker) > .2:
             buy.append(1)
         else:
             buy.append(0)
-        if factors.google_trends_value(ticker) > 50:
+        if factors.get_google_trends_value(ticker) > 50:
             buy.append(1)
         else:
             buy.append(0)
-        if factors.twitter_value(ticker):
+        if factors.get_twitter_value(ticker):
             buy.append(1)
         else:
             buy.append(0)
-        if factors.reddit_value(ticker):
+        if factors.get_reddit_value(ticker):
             buy.append(1)
         else:
             buy.append(0)
-        if factors.volatility_value(ticker):
+        if factors.get_volatility_value(ticker):
             buy.append(1)
         else:
             buy.append(0)
