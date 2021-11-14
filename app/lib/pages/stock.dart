@@ -1,3 +1,4 @@
+import 'package:intl/intl.dart' as intl;
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
@@ -9,8 +10,9 @@ class StockArguments {
 }
 
 class Stock extends StatelessWidget {
-  const Stock({Key? key}) : super(key: key);
+  Stock({Key? key}) : super(key: key);
 
+  final formatter = intl.NumberFormat.decimalPattern();
   static const routeName = '/stock';
 
   @override
@@ -33,16 +35,33 @@ class Stock extends StatelessWidget {
               NeedlePointer(value: args.data['Sigma Value'] * 100)
             ], annotations: <GaugeAnnotation>[
               GaugeAnnotation(
-                  widget: Text("${double.parse((args.data['Sigma Value'] * 100).toStringAsFixed(2))}\n${args.data['Market Prediction']}",
+                  widget: Text(
+                      "${double.parse((args.data['Sigma Value'] * 100).toStringAsFixed(2))}\n${args.data['Market Prediction']}",
                       style: const TextStyle(
                           fontSize: 25, fontWeight: FontWeight.bold)),
                   angle: 90,
                   positionFactor: 0.5)
             ])
           ]),
-          Text('Volume: ${args.data['Volume']}'),
-          Text('Market cap: ${args.data['Market Cap']}'),
-          Text('Volume: ${args.data['Volume']}'),
+          const SizedBox(
+            height: 5,
+          ),
+          Text(
+            'Volume: ${formatter.format(args.data['Volume'])}',
+            style: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          Text('Market cap: ${formatter.format(args.data['Market Cap'])}',
+            style: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ],
       )),
     );

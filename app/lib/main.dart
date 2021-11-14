@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         '/dashboard': (context) => const Dashboard(),
         '/watchlist': (context) => const Watchlist(),
         '/following': (context) => const StocksFollowing(),
-        Stock.routeName: (context) => const Stock(),
+        Stock.routeName: (context) => Stock(),
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,
