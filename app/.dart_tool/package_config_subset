@@ -46,6 +46,10 @@ http_parser
 2.12
 file:///C:/tools/flutter/.pub-cache/hosted/pub.dartlang.org/http_parser-4.0.0/
 file:///C:/tools/flutter/.pub-cache/hosted/pub.dartlang.org/http_parser-4.0.0/lib/
+intl
+2.12
+file:///C:/tools/flutter/.pub-cache/hosted/pub.dartlang.org/intl-0.17.0/
+file:///C:/tools/flutter/.pub-cache/hosted/pub.dartlang.org/intl-0.17.0/lib/
 lints
 2.12
 file:///C:/tools/flutter/.pub-cache/hosted/pub.dartlang.org/lints-1.0.1/
@@ -78,6 +82,14 @@ string_scanner
 2.12
 file:///C:/tools/flutter/.pub-cache/hosted/pub.dartlang.org/string_scanner-1.1.0/
 file:///C:/tools/flutter/.pub-cache/hosted/pub.dartlang.org/string_scanner-1.1.0/lib/
+syncfusion_flutter_core
+2.12
+file:///C:/tools/flutter/.pub-cache/hosted/pub.dartlang.org/syncfusion_flutter_core-19.3.53/
+file:///C:/tools/flutter/.pub-cache/hosted/pub.dartlang.org/syncfusion_flutter_core-19.3.53/lib/
+syncfusion_flutter_gauges
+2.12
+file:///C:/tools/flutter/.pub-cache/hosted/pub.dartlang.org/syncfusion_flutter_gauges-19.3.53/
+file:///C:/tools/flutter/.pub-cache/hosted/pub.dartlang.org/syncfusion_flutter_gauges-19.3.53/lib/
 term_glyph
 2.12
 file:///C:/tools/flutter/.pub-cache/hosted/pub.dartlang.org/term_glyph-1.2.0/
