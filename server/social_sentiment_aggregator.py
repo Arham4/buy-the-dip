@@ -29,6 +29,7 @@ def is_holiday(datetime):
 def is_weekend(dt):
     return dt.weekday() > 4 or is_holiday(dt)
 
+
 def minus_with_weekends(dt):
     next = dt - datetime.timedelta(days=1)
     while is_weekend(next):
@@ -102,7 +103,6 @@ def make_sentiment_file(reddit):
                 output[ticker].insert(0, value)
                 previous_date = to_datetime(date)
                 print('average for ' + date + ' in ticker ' + ticker + ' is ' + str(output[ticker][0]))
-
 
     json.dump(output, output_file)
     print('finished')
