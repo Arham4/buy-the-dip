@@ -5,17 +5,15 @@ import json as jfile
 
 
 app = Flask(__name__)
-stock_data = jfile.load(open('dump.json', mode='r'))
+stock_data = jfile.load(open('dump2.json', mode='r'))
 
 
 @app.route('/stock/<ticker>')
 def func(ticker):
-    # example: factors.stock_fear_index(ticker)
     return stock_data[ticker]
 
 @app.route('/recommendations/<count>')
 def func(count):
-    # example: factors.stock_fear_index(ticker)
     return recommendations(stock_data,count)
 
 epoch_2017 = 1483228800
@@ -172,6 +170,7 @@ def recommendations(json_file,count):
     return result
  
 if __name__ == '__main__':
+    
     app.run(debug=True, host='0.0.0.0')
     # data = []
     # stocks = load_stocks('data/s&p500_stock_names.txt')
