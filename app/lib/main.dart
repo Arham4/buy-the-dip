@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
+import 'pages/dashboard.dart';
+import 'pages/highest_performers.dart';
+import 'pages/home.dart';
+import 'pages/recommendations.dart';
+import 'pages/stocks.dart';
+import 'pages/stocks_following.dart';
+import 'pages/watch_list.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -178,141 +186,3 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Home'),
-        ),
-        body: Center(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/dashboard');
-                  },
-                  child: const Text('Dashboard')),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/recommendations');
-                  },
-                  child: const Text('Recommendations')),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/highestperformers');
-                  },
-                  child: const Text('Highest Performers')),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/stocks');
-                  },
-                  child: const Text('Stocks')),
-            ])));
-  }
-}
-
-class Recommendations extends StatelessWidget {
-  const Recommendations({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Recommendations'),
-      ),
-      body: const Center(child: Text('You can do it!')),
-    );
-  }
-}
-
-class HighestPerformers extends StatelessWidget {
-  const HighestPerformers({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Highest Performers'),
-      ),
-      body: const Center(child: Text('Peloton')),
-    );
-  }
-}
-
-class Stocks extends StatelessWidget {
-  const Stocks({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Stocks'), actions: [
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.search),
-        )
-      ]),
-      body: const Center(child: Text('Bitcoin')),
-    );
-  }
-}
-
-class Dashboard extends StatelessWidget {
-  const Dashboard({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Dashboard'),
-        ),
-        body: Center(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/watchlist');
-                  },
-                  child: const Text('Watchlist')),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/following');
-                  },
-                  child: const Text('Stocks Following')),
-            ])));
-  }
-}
-
-class Watchlist extends StatelessWidget {
-  const Watchlist({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Watchlist'),
-      ),
-      body: const Center(child: Text('GME')),
-    );
-  }
-}
-
-//
-class StocksFollowing extends StatelessWidget {
-  const StocksFollowing({Key? key}) : super(key: key);
-
-//
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Stocks Following'),
-      ),
-      body: const Center(child: Text('SP500')),
-    );
-  }
-}
