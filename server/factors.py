@@ -12,6 +12,9 @@ dummy_value = 100
 dummy_length = 100
 epoch_today = 1636761600
 
+reddit_sentiment = json.load(open('./sentiment/reddit_sentiment.json', mode='r'))
+twitter_sentiment = json.load(open('./sentiment/twitter_sentiment.json', mode='r'))
+
 
 def get_price_values(ticker, from_epoch, to_epoch):
     return finnhub_client.stock_candles(ticker, 'D', from_epoch, to_epoch)['c']
@@ -67,11 +70,11 @@ def get_google_trends_values(ticker, from_epoch, to_epoch):
 
 
 def get_twitter_values(ticker, from_epoch, to_epoch):
-    return [dummy_value] * dummy_length
+    return twitter_sentiment[ticker]
 
 
 def get_reddit_values(ticker, from_epoch, to_epoch):
-    return [dummy_value] * dummy_length
+    return reddit_sentiment[ticker]
 
 
 def get_volatility_values(ticker, from_epoch, to_epoch):
