@@ -68,6 +68,7 @@ def buy_dip(ticker, crypto):
         else:
             buy.append(0)
         if value == -1:
+            print(macd_indices[value])
             data[ticker] = buy
         else:
             if price_values[value] > price_values[value-1]:
@@ -75,11 +76,11 @@ def buy_dip(ticker, crypto):
             else:
                 correct_values.append(0)
             output.append(buy)
-
+   
     return (output, correct_values, data)
-def load_stocks():
+def load_stocks(filepath):
     stocks = []
-    for line in open('data/stock_names.txt', mode='r').read().splitlines():
+    for line in open('', mode='r').read().splitlines():
         split = line.split(',')
         ticker = split[0]
         name = split[1]
@@ -99,24 +100,21 @@ def calculate_weights(weights, examples, correct_values, iteration, learning_rat
 
 def classification(weights, examples):
         predicted_value = sigma(dot_product(weights, examples))
-        if(predicted_value <.3):
+        if(predicted_value <.375):
             return ('Sell', predicted_value)
-        elif(predicted_value >= .7):
+        elif(predicted_value >= .625):
             return ('Buy', predicted_value)
         return ('Hold', predicted_value)
-if __name__ == '__main__':
-    #    app.run(debug=True, host='0.0.0.0')
-    data = []
-    # stocks = load_stocks()
-    stocks = ['GOOG', 'TSLA','AAPL', 'OSTK', 'PLTR']
-    learning_rate = .8
-    json_file = {}
-    json = {}
+def populate(stocks, data, correct_values, json, bool):
     for i in stocks:
-        f = False
-        data, correct_values, json_2 = buy_dip(i, f)
+        f = bool
+        datas, correct_value, json_2 = buy_dip(i, f)
+        data.extend(datas)
+        correct_values.extend(correct_value)
         for key, value in json_2.items():
             json[key] = value
+    return data, correct_values, json
+def load_json(data, correct_values, learning_rate, json, json_file):
     weights = [0] * len(data[0])
     for iteration in range(len(data)):
         weights = calculate_weights(weights, data, correct_values, iteration, learning_rate)
@@ -125,5 +123,19 @@ if __name__ == '__main__':
         json_file[ticker] = {}
         json_file[ticker]['Market Prediction'] = classify
         json_file[ticker]['Sigma Value'] = percentage
-
+    return json_file
+if __name__ == '__main__':
+    #    app.run(debug=True, host='0.0.0.0')
+    data = []
+    # stocks = load_stocks('data/stock_names.txt')
+    stocks = ['GOOG', 'TSLA','AAPL','OSTK', 'PLTR', 'PTON']
+    #crypto = load_stocks('data/crypto_names.txt')
+    crypto = ['BINANCE:ETCUSDC']
+    learning_rate = .7
+    json_file, json, data, correct_values = ({},{},[],[])
+    data, correct_values,json = populate(stocks, data, correct_values, json, False)
+    json_file = load_json(data, correct_values, learning_rate, json, json_file)
+    json, data, correct_values = ({},[],[])
+    data, correct_values,json = populate(crypto, data, correct_values, json, True)
+    json_file = load_json(data, correct_values, learning_rate, json, json_file)
     print(json_file)

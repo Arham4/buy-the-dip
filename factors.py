@@ -1,7 +1,7 @@
-import random
 import json
 import math
 import urllib.request
+import certifi
 
 import finnhub
 
@@ -9,7 +9,7 @@ config = json.load(open('config.json', mode='r'))
 finnhub_client = finnhub.Client(api_key=config['finnhub_api_key'])
 
 dummy_value = 100
-dummy_length = 50
+dummy_length = 100
 epoch_today = 1636761600
 
 
@@ -18,13 +18,13 @@ def get_price_values(ticker, from_epoch, to_epoch):
 
 
 def get_stock_fear_indices(from_epoch, to_epoch):
-    return [random.randrange(0, dummy_value, 1)] * dummy_length
+    return [dummy_value] * dummy_length
 
 
 def get_crypto_fear_indices(from_epoch, to_epoch):
     days_between = math.ceil((to_epoch - from_epoch) / 86400)
     fear_index_json = json.loads(
-        urllib.request.urlopen('https://api.alternative.me/fng/?limit=' + str(days_between)).read())
+        urllib.request.urlopen('https://api.alternative.me/fng/?limit=' + str(days_between), cafile=certifi.where()).read())
     return list(map(lambda day: int(day['value']), fear_index_json['data']))[::-1]
 
 
@@ -33,7 +33,7 @@ def get_rsi_indices(ticker, from_epoch, to_epoch):
                                                   indicator='rsi', indicator_fields={"timeperiod": 14, })
     rsi_datum = rsi_data['rsi']
     while len(rsi_datum) < dummy_length:
-        rsi_datum.insert(0, random.randrange(0, dummy_value, 1))
+        rsi_datum.insert(0, dummy_value)
     return rsi_datum
 
 
@@ -43,7 +43,7 @@ def get_macd_indices(ticker, from_epoch, to_epoch):
                                                    indicator_fields={})
     macd_datum = macd_data['macdSignal']
     while len(macd_datum) < dummy_length:
-        macd_datum.insert(0, random.randrange(0, dummy_value, 1))
+        macd_datum.insert(0, dummy_value)
     return macd_datum
 
 
@@ -53,21 +53,21 @@ def get_stochastic_indices(ticker, from_epoch, to_epoch):
                                                          indicator_fields={"fastkperiod": 14, })
     stochastic_datum = stochastic_data['slowd']
     while len(stochastic_datum) < dummy_length:
-        stochastic_datum.insert(0, random.randrange(0, dummy_value, 1))
+        stochastic_datum.insert(0, dummy_value)
     return stochastic_datum
 
 
 def get_google_trends_values(ticker, from_epoch, to_epoch):
-    return [random.randrange(0, dummy_value, 1)] * dummy_length
+    return [dummy_value] * dummy_length
 
 
 def get_twitter_values(ticker, from_epoch, to_epoch):
-    return [random.randrange(0, dummy_value, 1)] * dummy_length
+    return [dummy_value] * dummy_length
 
 
 def get_reddit_values(ticker, from_epoch, to_epoch):
-    return [random.randrange(0, dummy_value, 1)] * dummy_length
+    return [dummy_value] * dummy_length
 
 
 def get_volatility_values(ticker, from_epoch, to_epoch):
-    return [random.randrange(0, dummy_value, 1)] * dummy_length
+    return [dummy_value] * dummy_length
