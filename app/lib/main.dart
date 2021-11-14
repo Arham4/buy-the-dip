@@ -5,6 +5,7 @@ import 'pages/dashboard.dart';
 import 'pages/highest_performers.dart';
 import 'pages/home.dart';
 import 'pages/recommendations.dart';
+import 'pages/stock.dart';
 import 'pages/stocks.dart';
 import 'pages/stocks_following.dart';
 import 'pages/watch_list.dart';
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
         '/dashboard': (context) => const Dashboard(),
         '/watchlist': (context) => const Watchlist(),
         '/following': (context) => const StocksFollowing(),
+        Stock.routeName: (context) => const Stock(),
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -185,4 +187,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-

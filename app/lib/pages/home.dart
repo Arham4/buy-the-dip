@@ -1,7 +1,134 @@
+import 'dart:convert';
+
+import 'package:http/http.dart';
 import 'package:flutter/material.dart';
 
-class Home extends StatelessWidget {
+import 'stock.dart';
+
+class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() {
+    return _HomeState();
+  }
+}
+
+class _HomeState extends State<Home> {
+  Map _recommendedStocks = {};
+  bool _recommendedLoading = true;
+  Map _topPerformers = {};
+  bool _topLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _recommendedStocks = {};
+    _topPerformers = {};
+    get(Uri.parse('http://10.21.1.196:5000/recommendations/5'), headers: {})
+        .then((response) {
+      setState(() {
+        _recommendedStocks = json.decode(response.body);
+        _recommendedLoading = false;
+      });
+    });
+    get(Uri.parse('http://10.21.1.196:5000/top-performers'), headers: {})
+        .then((response) {
+      setState(() {
+        _topPerformers = json.decode(response.body);
+        _topLoading = false;
+      });
+    });
+  }
+
+  List<Widget> _generateTopPerformers() {
+    return <Widget>[
+      for (var key in _topPerformers.keys)
+        Card(
+          child: InkWell(
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                Stock.routeName,
+                arguments: StockArguments(
+                  key,
+                  _topPerformers[key],
+                ),
+              );
+            },
+            child: SizedBox(
+              height: 100,
+              width: 100,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20.0),
+                    child: Image.network(
+                      _recommendedStocks[key]['Logo'],
+                      height: 35.0,
+                      width: 35.0,
+                    ),
+                  ),
+                  Text(
+                    key,
+                    style: const TextStyle(color: Colors.black),
+                  ),
+                  Text(
+                    _recommendedStocks[key]['Market Prediction'],
+                    style: TextStyle(color: _recommendedStocks[key]['Market Prediction'] == "Buy" ? Colors.green : _recommendedStocks[key]['Market Prediction'] == "Sell" ? Colors.red : Colors.black)
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
+    ];
+  }
+
+  List<Widget> _generateRecommendations() {
+    return <Widget>[
+      for (var key in _recommendedStocks.keys)
+        Card(
+          child: InkWell(
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                Stock.routeName,
+                arguments: StockArguments(
+                  key,
+                  _recommendedStocks[key],
+                ),
+              );
+            },
+            child: SizedBox(
+              height: 100,
+              width: 100,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20.0),
+                    child: Image.network(
+                      _recommendedStocks[key]['Logo'],
+                      height: 35.0,
+                      width: 35.0,
+                    ),
+                  ),
+                  Text(
+                    key,
+                    style: const TextStyle(color: Colors.black),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,96 +140,52 @@ class Home extends StatelessWidget {
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-              Text(
+              const Text(
                 'Recommended Stocks',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               SizedBox(
                 height: 100,
                 width: double.infinity,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: <Widget>[
-                    for (var i = 0; i < 5; i++)
-                      Card(
-                        child: SizedBox(
-                          height: 100,
-                          width: 100,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(20.0),
-                                child: Image.network(
-                                  'https://static.finnhub.io/logo/87cb30d8-80df-11ea-8951-00000000092a.png',
-                                  height: 35.0,
-                                  width: 35.0,
-                                ),
-                              ),
-                              Text(
-                                'AAPL',
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            ],
-                          ),
-                        ),
+                child: _recommendedLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: _generateRecommendations(),
                       ),
-                  ],
-                ),
               ),
               const Divider(
                 height: 15,
                 thickness: 1.0,
               ),
-              Text(
+              /*const Text(
                 'Top Performers',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               SizedBox(
                 height: 100,
                 width: double.infinity,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: <Widget>[
-                    for (var i = 0; i < 5; i++)
-                      Card(
-                        child: SizedBox(
-                          height: 100,
-                          width: 100,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(20.0),
-                                child: Image.network(
-                                  'https://static.finnhub.io/logo/87cb30d8-80df-11ea-8951-00000000092a.png',
-                                  height: 35.0,
-                                  width: 35.0,
-                                ),
-                              ),
-                              Text(
-                                'AAPL',
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            ],
-                          ),
-                        ),
+                child: _topLoading
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: _generateTopPerformers(),
                       ),
-                  ],
-                ),
-              ),
+              ),*/
               ElevatedButton(
                   onPressed: () {
                     Navigator.pushNamed(context, '/dashboard');
                   },
                   child: const Text('Dashboard')),
-              ElevatedButton(
+              /*ElevatedButton(
                   onPressed: () {
                     Navigator.pushNamed(context, '/recommendations');
                   },
-                  child: const Text('Recommendations')),
+                  child: const Text('Recommendations')),*/
               ElevatedButton(
                   onPressed: () {
                     Navigator.pushNamed(context, '/highestperformers');

@@ -14,7 +14,7 @@ def func(ticker):
 
 @app.route('/recommendations/<count>')
 def func2(count):
-    return recommendations(stock_data,count)
+    return recommendations(stock_data,int(count))
 
 @app.route('/top-performers')
 def func3():
@@ -191,7 +191,7 @@ def recommendations(json_file,count):
         output[i] = json_file[i]
     return output
 
- 
+
 if __name__ == '__main__':
 
     app.run(debug=True, host='0.0.0.0')
