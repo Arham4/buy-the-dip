@@ -164,16 +164,16 @@ def recommendations(json_file,count):
     index = []
     output = {}
     for key in json_file:
-        if len(recommendations) < count:
-            recommendations.append(json_file[key]['Sigma Value'])
+        if len(recommendation) < count:
+            recommendation.append(json_file[key]['Sigma Value'])
             index.append(key)
-        elif min(recommendations) < json_file[key]['Sigma Value']:
-            min = 0
-            for i in recommendations:
-                if i == min(recommendations):
-                    min = i
-            index.replace(i,key)
-            recommendations.replace(min(recommendations), json_file[key]['Sigma Value'])
+        elif min(recommendation) < json_file[key]['Sigma Value']:
+            least = 0
+            for i in range(len(recommendation)):
+                if recommendation[i] == min(recommendation):
+                    least = i
+            index[least] = key
+            recommendation[least] = json_file[key]['Sigma Value']
     for i in index:
         output[i] = json_file[i]
     return output
@@ -181,7 +181,7 @@ def recommendations(json_file,count):
  
 if __name__ == '__main__':
     
-    app.run(debug=True, host='0.0.0.0')
+    # app.run(debug=True, host='0.0.0.0')
     # data = []
     # stocks = load_stocks('data/s&p500_stock_names.txt')
     # stocks = ['GOOG', 'TSLA', 'AAPL', 'A']
