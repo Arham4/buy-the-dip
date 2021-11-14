@@ -1,3 +1,4 @@
+import random
 import json
 import math
 import urllib.request
@@ -17,7 +18,7 @@ def get_price_values(ticker, from_epoch, to_epoch):
 
 
 def get_stock_fear_indices(from_epoch, to_epoch):
-    return [dummy_value] * dummy_length
+    return [random.randrange(0, dummy_value, 1)] * dummy_length
 
 
 def get_crypto_fear_indices(from_epoch, to_epoch):
@@ -32,7 +33,7 @@ def get_rsi_indices(ticker, from_epoch, to_epoch):
                                                   indicator='rsi', indicator_fields={"timeperiod": 14, })
     rsi_datum = rsi_data['rsi']
     while len(rsi_datum) < dummy_length:
-        rsi_datum.insert(0, dummy_value)
+        rsi_datum.insert(0, random.randrange(0, dummy_value, 1))
     return rsi_datum
 
 
@@ -42,7 +43,7 @@ def get_macd_indices(ticker, from_epoch, to_epoch):
                                                    indicator_fields={})
     macd_datum = macd_data['macdSignal']
     while len(macd_datum) < dummy_length:
-        macd_datum.insert(0, dummy_value)
+        macd_datum.insert(0, random.randrange(0, dummy_value, 1))
     return macd_datum
 
 
@@ -52,21 +53,21 @@ def get_stochastic_indices(ticker, from_epoch, to_epoch):
                                                          indicator_fields={"fastkperiod": 14, })
     stochastic_datum = stochastic_data['slowd']
     while len(stochastic_datum) < dummy_length:
-        stochastic_datum.insert(0, dummy_value)
+        stochastic_datum.insert(0, random.randrange(0, dummy_value, 1))
     return stochastic_datum
 
 
 def get_google_trends_values(ticker, from_epoch, to_epoch):
-    return [dummy_value] * dummy_length
+    return [random.randrange(0, dummy_value, 1)] * dummy_length
 
 
 def get_twitter_values(ticker, from_epoch, to_epoch):
-    return [dummy_value] * dummy_length
+    return [random.randrange(0, dummy_value, 1)] * dummy_length
 
 
 def get_reddit_values(ticker, from_epoch, to_epoch):
-    return [dummy_value] * dummy_length
+    return [random.randrange(0, dummy_value, 1)] * dummy_length
 
 
 def get_volatility_values(ticker, from_epoch, to_epoch):
-    return [dummy_value] * dummy_length
+    return [random.randrange(0, dummy_value, 1)] * dummy_length

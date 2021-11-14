@@ -1,6 +1,6 @@
 import math
 
-dot_product = lambda X, Y: sum(map(lambda x, y: x * y, X, Y))
+dot_product = lambda X, Y: sum(map(lambda x, y: x * float(y), X, Y))
 
 def sigma(t):
     return 1 / (1 + math.exp(-t))
