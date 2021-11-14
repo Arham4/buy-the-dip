@@ -19,16 +19,16 @@ class Stock extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(args.ticker),
+        title: Text('${args.ticker} - ${args.data['Name']}'),
       ),
       body: Center(
           child: Column(
         children: [
           SfRadialGauge(axes: <RadialAxis>[
             RadialAxis(minimum: 0, maximum: 100, ranges: <GaugeRange>[
-              GaugeRange(startValue: 0, endValue: 33, color: Colors.green),
-              GaugeRange(startValue: 33, endValue: 66, color: Colors.orange),
-              GaugeRange(startValue: 67, endValue: 100, color: Colors.red)
+              GaugeRange(startValue: 0, endValue: 50, color: Colors.red),
+              GaugeRange(startValue: 50, endValue: 62.5, color: Colors.orange),
+              GaugeRange(startValue: 62.5, endValue: 100, color: Colors.green)
             ], pointers: <GaugePointer>[
               NeedlePointer(value: args.data['Sigma Value'] * 100)
             ], annotations: <GaugeAnnotation>[
@@ -39,7 +39,10 @@ class Stock extends StatelessWidget {
                   angle: 90,
                   positionFactor: 0.5)
             ])
-          ])
+          ]),
+          Text('Volume: ${args.data['Volume']}'),
+          Text('Market cap: ${args.data['Market Cap']}'),
+          Text('Volume: ${args.data['Volume']}'),
         ],
       )),
     );
