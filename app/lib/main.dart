@@ -42,8 +42,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -158,9 +158,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         width: MediaQuery.of(context).size.width * 0.4,
                         child: ElevatedButton(
                             onPressed: () {
-                              if (emailController.text != "" &&
-                                  emailController.text.contains("@") &&
-                                  passwordController.text != "") {
+                              if (_emailController.text != "" &&
+                                  _emailController.text.contains("@") &&
+                                  _passwordController.text != "") {
                                 Navigator.pushReplacementNamed(
                                     context, '/home');
                               }
