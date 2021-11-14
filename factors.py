@@ -13,7 +13,7 @@ epoch_today = 1636761600
 
 
 def get_price_values(ticker, from_epoch, to_epoch):
-    return finnhub_client.stock_candles(ticker, 'D', from_epoch, to_epoch)
+    return finnhub_client.stock_candles(ticker, 'D', from_epoch, to_epoch)['c']
 
 
 def get_stock_fear_indices(from_epoch, to_epoch):
