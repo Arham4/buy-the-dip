@@ -55,11 +55,11 @@ def buy_dip(ticker, crypto):
             buy.append(1)
         else:
             buy.append(0)
-        if twitter_values[value] > 50:
+        if twitter_values[value] > .9:
             buy.append(1)
         else:
             buy.append(0)
-        if reddit_values[value]> 50:
+        if reddit_values[value]> 0:
             buy.append(1)
         else:
             buy.append(0)
@@ -68,7 +68,6 @@ def buy_dip(ticker, crypto):
         else:
             buy.append(0)
         if value == -1:
-            print(macd_indices[value])
             data[ticker] = buy
         else:
             if price_values[value] > price_values[value-1]:
@@ -131,7 +130,7 @@ if __name__ == '__main__':
     stocks = ['GOOG', 'TSLA','AAPL','OSTK', 'PLTR', 'PTON']
     #crypto = load_stocks('data/crypto_names.txt')
     crypto = ['BINANCE:ETCUSDC']
-    learning_rate = .7
+    learning_rate = .1
     json_file, json, data, correct_values = ({},{},[],[])
     data, correct_values,json = populate(stocks, data, correct_values, json, False)
     json_file = load_json(data, correct_values, learning_rate, json, json_file)
