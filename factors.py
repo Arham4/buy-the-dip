@@ -1,3 +1,4 @@
+import math
 import fear_and_greed
 import json
 import urllib.request
@@ -29,7 +30,9 @@ def get_recent_stock_fear_index(from_epoch):
 
 
 def get_crypto_fear_indices(from_epoch, to_epoch):
-    return [dummy_value] * dummy_length
+    days_between = math.ceil((to_epoch - from_epoch) / 86400)
+    fear_index_json = json.loads(urllib.request.urlopen('https://api.alternative.me/fng/?limit=' + str(days_between)).read())
+    return list(map(lambda day: day['value'], fear_index_json['data']))
 
 
 def get_recent_crypto_fear_index(from_epoch):
