@@ -1,6 +1,7 @@
 from flask import Flask
 import factors
 from gradient_descent_math import dot_product, sigma, sigma_prime
+import json as jfile
 
 '''
 app = Flask(__name__)
@@ -32,7 +33,7 @@ def buy_dip(ticker, crypto):
     twitter_values = factors.get_twitter_values(ticker, epoch_2017, epoch_today)
     reddit_values = factors.get_reddit_values(ticker, epoch_2017, epoch_today)
     volatility_values = factors.get_volatility_values(ticker, epoch_2017, epoch_today)
-    length = len(volatility_values)
+    length = min(len(reddit_values),len(volatility_values))
     for yaya in range(1, length - 1):
         value = -yaya
         buy = []
@@ -82,7 +83,7 @@ def buy_dip(ticker, crypto):
 
 def load_stocks(filepath):
     stocks = []
-    for line in open('', mode='r').read().splitlines():
+    for line in open(filepath, mode='r').read().splitlines():
         split = line.split(',')
         ticker = split[0]
         name = split[1]
@@ -140,12 +141,14 @@ def load_json(data, correct_values, learning_rate, json, json_file):
 
     return json_file
 
+def reccomendations(json_file):
+    for key , value in json_file
 
 if __name__ == '__main__':
     #    app.run(debug=True, host='0.0.0.0')
     data = []
-    # stocks = load_stocks('data/stock_names.txt')
-    stocks = ['GOOG', 'TSLA', 'AAPL']
+    stocks = load_stocks('data/s&p500_stock_names.txt')
+   # stocks = ['GOOG', 'TSLA', 'AAPL', 'A']
     # crypto = load_stocks('data/crypto_names.txt')
     ## crypto = ['BINANCE:ETCUSDC']
     learning_rate = .5
@@ -156,3 +159,4 @@ if __name__ == '__main__':
     ##data, correct_values, json = populate(crypto, data, correct_values, json, True)
     ##json_file = load_json(data, correct_values, learning_rate, json, json_file)
     print(json_file)
+    jfile.dump(json_file, open('dump.json', mode='w+'))

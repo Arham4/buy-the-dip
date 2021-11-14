@@ -2,6 +2,7 @@ import json
 import math
 import urllib.request
 import certifi
+import time
 
 import finnhub
 
@@ -17,11 +18,20 @@ twitter_sentiment = json.load(open('./sentiment/twitter_sentiment.json', mode='r
 
 
 def get_price_values(ticker, from_epoch, to_epoch):
-    return finnhub_client.stock_candles(ticker, 'D', from_epoch, to_epoch)['c']
-
+    try:
+        return finnhub_client.stock_candles(ticker, 'D', from_epoch, to_epoch)['c']
+    except finnhub.FinnhubAPIException:
+        print('API limit reached, waiting 1 minute...')
+        time.sleep(60.1)
+        return get_price_values(ticker, from_epoch, to_epoch)
 
 def get_volume_values(ticker, from_epoch, to_epoch):
-    return finnhub_client.stock_candles(ticker, 'D', from_epoch, to_epoch)['v']
+    try:
+        return finnhub_client.stock_candles(ticker, 'D', from_epoch, to_epoch)['v']
+    except finnhub.FinnhubAPIException:
+        print('API limit reached, waiting 1 minute...')
+        time.sleep(60.1)
+        return get_volume_values(ticker, from_epoch, to_epoch)
 
 
 def get_stock_fear_indices(from_epoch, to_epoch):
@@ -37,33 +47,45 @@ def get_crypto_fear_indices(from_epoch, to_epoch):
 
 
 def get_rsi_indices(ticker, from_epoch, to_epoch):
-    rsi_data = finnhub_client.technical_indicator(symbol=ticker, resolution='D', _from=from_epoch, to=to_epoch,
+    try:
+        rsi_data = finnhub_client.technical_indicator(symbol=ticker, resolution='D', _from=from_epoch, to=to_epoch,
                                                   indicator='rsi', indicator_fields={"timeperiod": 14, })
-    rsi_datum = rsi_data['rsi']
-    while len(rsi_datum) < dummy_length:
-        rsi_datum.insert(0, dummy_value)
-    return rsi_datum
-
+        rsi_datum = rsi_data['rsi']
+        while len(rsi_datum) < dummy_length:
+            rsi_datum.insert(0, dummy_value)
+        return rsi_datum
+    except finnhub.FinnhubAPIException:
+        print('API limit reached, waiting 1 minute...')
+        time.sleep(60.1)
+        return get_rsi_indices(ticker, from_epoch, to_epoch)
 
 def get_macd_indices(ticker, from_epoch, to_epoch):
-    macd_data = finnhub_client.technical_indicator(symbol=ticker, resolution='D', _from=from_epoch, to=to_epoch,
+    try:
+        macd_data = finnhub_client.technical_indicator(symbol=ticker, resolution='D', _from=from_epoch, to=to_epoch,
                                                    indicator='macd',
                                                    indicator_fields={})
-    macd_datum = macd_data['macdSignal']
-    while len(macd_datum) < dummy_length:
-        macd_datum.insert(0, dummy_value)
-    return macd_datum
-
+        macd_datum = macd_data['macdSignal']
+        while len(macd_datum) < dummy_length:
+            macd_datum.insert(0, dummy_value)
+        return macd_datum
+    except finnhub.FinnhubAPIException:
+        print('API limit reached, waiting 1 minute...')
+        time.sleep(60.1)
+        return get_macd_indices(ticker, from_epoch, to_epoch)
 
 def get_stochastic_indices(ticker, from_epoch, to_epoch):
-    stochastic_data = finnhub_client.technical_indicator(symbol=ticker, resolution='D', _from=from_epoch, to=to_epoch,
+    try:
+        stochastic_data = finnhub_client.technical_indicator(symbol=ticker, resolution='D', _from=from_epoch, to=to_epoch,
                                                          indicator='stoch',
                                                          indicator_fields={"fastkperiod": 14, })
-    stochastic_datum = stochastic_data['slowd']
-    while len(stochastic_datum) < dummy_length:
-        stochastic_datum.insert(0, dummy_value)
-    return stochastic_datum
-
+        stochastic_datum = stochastic_data['slowd']
+        while len(stochastic_datum) < dummy_length:
+            stochastic_datum.insert(0, dummy_value)
+        return stochastic_datum
+    except finnhub.FinnhubAPIException:
+        print('API limit reached, waiting 1 minute...')
+        time.sleep(60.1)
+        return get_stochastic_indices(ticker, from_epoch, to_epoch)
 
 def get_google_trends_values(ticker, from_epoch, to_epoch):
     return [dummy_value] * dummy_length
@@ -85,7 +107,12 @@ def get_volatility_values(ticker, from_epoch, to_epoch):
 
 
 def get_market_cap_and_logo(ticker):
-    market_cap = finnhub_client.company_profile2(symbol=ticker)
-    if 'marketCapitalization' not in market_cap:
-        return None, None, None
-    return market_cap['marketCapitalization'], market_cap['logo'], market_cap['name']
+    try:
+        market_cap = finnhub_client.company_profile2(symbol=ticker)
+        if 'marketCapitalization' not in market_cap:
+            return None, None, None
+        return market_cap['marketCapitalization'], market_cap['logo'], market_cap['name']
+    except finnhub.FinnhubAPIException:
+        print('API limit reached, waiting 1 minute...')
+        time.sleep(60.1)
+        return get_market_cap_and_logo(ticker)
