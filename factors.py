@@ -82,7 +82,7 @@ def get_stochastic_indices(ticker, from_epoch, to_epoch):
     stochastic_datum = stochastic_data['slowd']
     while len(stochastic_datum) < dummy_length:
         stochastic_datum.insert(0, dummy_value)
-    return stochastic_datum[-1]
+    return stochastic_datum
 
 
 def get_recent_stochastic_index(ticker, from_epoch):
