@@ -97,7 +97,12 @@ def get_google_trends_values(ticker, from_epoch, to_epoch):
 
 
 def get_twitter_values(ticker, from_epoch, to_epoch):
-    return twitter_sentiment[ticker]
+    if ticker not in twitter_sentiment:
+        return [dummy_value] * dummy_length
+    else:
+        while len(twitter_sentiment[ticker]) < dummy_length:
+            twitter_sentiment[ticker].insert(0, dummy_value)
+        return twitter_sentiment[ticker]
 
 
 def get_reddit_values(ticker, from_epoch, to_epoch):

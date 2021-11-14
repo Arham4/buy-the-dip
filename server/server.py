@@ -3,15 +3,20 @@ import factors
 from gradient_descent_math import dot_product, sigma, sigma_prime
 import json as jfile
 
-'''
+
 app = Flask(__name__)
+stock_data = jfile.load(open('dump.json', mode='r'))
 
 
 @app.route('/stock/<ticker>')
 def func(ticker):
     # example: factors.stock_fear_index(ticker)
-    return ticker
-'''
+    return stock_data[ticker]
+
+@app.route('/recommendations/<count>')
+def func(count):
+    # example: factors.stock_fear_index(ticker)
+    return recommendations(stock_data,count)
 
 epoch_2017 = 1483228800
 epoch_today = 1636761600
@@ -21,6 +26,7 @@ def buy_dip(ticker, crypto):
     output = []
     data = {}
     correct_values = []
+    print(ticker)
     if crypto:
         crypto_fear_indicies = factors.get_crypto_fear_indices(epoch_2017, epoch_today)
     else:
@@ -33,7 +39,7 @@ def buy_dip(ticker, crypto):
     twitter_values = factors.get_twitter_values(ticker, epoch_2017, epoch_today)
     reddit_values = factors.get_reddit_values(ticker, epoch_2017, epoch_today)
     volatility_values = factors.get_volatility_values(ticker, epoch_2017, epoch_today)
-    length = min(len(reddit_values),len(volatility_values))
+    length = min(len(reddit_values),len(volatility_values),len(twitter_values),len(price_values))
     for yaya in range(1, length - 1):
         value = -yaya
         buy = []
@@ -112,6 +118,20 @@ def classification(weights, examples):
         return ('Buy', predicted_value)
     return ('Hold', predicted_value)
 
+def top_performers(tickers, count):
+    percent_increase = {}
+    prices = factors.get_price_values(tickers,epoch_2017,epoch_today)
+    percent_increase[tickers] = (prices[-1]-prices[-2])/prices[-2]
+    sorted_dict = {k: v for k, v in sorted(percent_increase.items(), key=lambda item: item[tickers])}
+    result = {}
+    for key in sorted_dict.keys():
+        if i == count: # change 3 to be however many i wanted
+            break
+        result[key] = sorted_dict[key]
+    return result
+
+
+
 
 def populate(stocks, data, correct_values, json, bool):
     for i in stocks:
@@ -141,29 +161,29 @@ def load_json(data, correct_values, learning_rate, json, json_file):
 
     return json_file
 
-def recommendations(json_file):
+def recommendations(json_file,count):
     sorted_dict = {k: v for k, v in sorted(json_file.items(), key=lambda item: item['Sigma Value'])}
     i = 0
     result = {}
     for key in sorted_dict.keys():
-        if i == 3: # change 3 to be however many i wanted
+        if i == count: # change 3 to be however many i wanted
             break
         result[key] = sorted_dict[key]
     return result
-    
+ 
 if __name__ == '__main__':
-    #    app.run(debug=True, host='0.0.0.0')
-    data = []
-    stocks = load_stocks('data/s&p500_stock_names.txt')
-   # stocks = ['GOOG', 'TSLA', 'AAPL', 'A']
+    app.run(debug=True, host='0.0.0.0')
+    # data = []
+    # stocks = load_stocks('data/s&p500_stock_names.txt')
+    # stocks = ['GOOG', 'TSLA', 'AAPL', 'A']
     # crypto = load_stocks('data/crypto_names.txt')
     ## crypto = ['BINANCE:ETCUSDC']
-    learning_rate = .5
-    json_file, json, data, correct_values = ({}, {}, [], [])
-    data, correct_values, json = populate(stocks, data, correct_values, json, False)
-    json_file = load_json(data, correct_values, learning_rate, json, json_file)
+    # learning_rate = .5
+    # json_file, json, data, correct_values = ({}, {}, [], [])
+    # data, correct_values, json = populate(stocks, data, correct_values, json, False)
+    #json_file = load_json(data, correct_values, learning_rate, json, json_file)
     ##json, data, correct_values = ({}, [], [])
     ##data, correct_values, json = populate(crypto, data, correct_values, json, True)
     ##json_file = load_json(data, correct_values, learning_rate, json, json_file)
-    print(json_file)
-    jfile.dump(json_file, open('dump.json', mode='w+'))
+    # print(json_file)
+    # jfile.dump(json_file, open('dump.json', mode='w+'))

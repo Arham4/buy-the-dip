@@ -78,7 +78,7 @@ BMY,Bristol Myers Squibb
 AVGO,Broadcom
 BR,Broadridge Financial Solutions
 BRO,Brown & Brown
-BF.B,Brown–Forman
+BF.B,Brownï¿½Forman
 CHRW,C. H. Robinson
 CDNS,Cadence Design Systems
 CZR,Caesars Entertainment
@@ -176,7 +176,7 @@ EFX,Equifax
 EQIX,Equinix
 EQR,Equity Residential
 ESS,Essex Property Trust
-EL,Estée Lauder Companies
+EL,Estï¿½e Lauder Companies
 ETSY,Etsy
 EVRG,Evergy
 ES,Eversource Energy
