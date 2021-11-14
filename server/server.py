@@ -193,9 +193,8 @@ def recommendations(json_file,count):
 
  
 if __name__ == '__main__':
-    jfile.dump(top_performers(stock_data, 5), open('highest.json', mode='w+'))
 
-    # app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0')
     # data = []
     # stocks = load_stocks('data/s&p500_stock_names.txt')
     # stocks = ['GOOG', 'TSLA', 'AAPL', 'A']
