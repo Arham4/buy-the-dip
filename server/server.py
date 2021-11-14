@@ -148,7 +148,7 @@ if __name__ == '__main__':
     stocks = ['GOOG', 'TSLA', 'AAPL']
     # crypto = load_stocks('data/crypto_names.txt')
     ## crypto = ['BINANCE:ETCUSDC']
-    learning_rate = .1
+    learning_rate = .5
     json_file, json, data, correct_values = ({}, {}, [], [])
     data, correct_values, json = populate(stocks, data, correct_values, json, False)
     json_file = load_json(data, correct_values, learning_rate, json, json_file)
