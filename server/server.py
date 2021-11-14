@@ -3,22 +3,25 @@ import factors
 from gradient_descent_math import dot_product, sigma, sigma_prime
 import json as jfile
 
-
 app = Flask(__name__)
 stock_data = jfile.load(open('dump2.json', mode='r'))
 top_data = jfile.load(open('highest.json', mode='r'))
+
 
 @app.route('/stock/<ticker>')
 def func(ticker):
     return stock_data[ticker]
 
+
 @app.route('/recommendations/<count>')
 def func2(count):
-    return recommendations(stock_data,int(count))
+    return recommendations(stock_data, int(count))
+
 
 @app.route('/top-performers')
 def func3():
     return top_data
+
 
 epoch_2017 = 1483228800
 epoch_today = 1636761600
@@ -41,7 +44,7 @@ def buy_dip(ticker, crypto):
     twitter_values = factors.get_twitter_values(ticker, epoch_2017, epoch_today)
     reddit_values = factors.get_reddit_values(ticker, epoch_2017, epoch_today)
     volatility_values = factors.get_volatility_values(ticker, epoch_2017, epoch_today)
-    length = min(len(reddit_values),len(volatility_values),len(twitter_values),len(price_values))
+    length = min(len(reddit_values), len(volatility_values), len(twitter_values), len(price_values))
     for yaya in range(1, length - 1):
         value = -yaya
         buy = []
@@ -120,13 +123,14 @@ def classification(weights, examples):
         return ('Buy', predicted_value)
     return ('Hold', predicted_value)
 
+
 def top_performers(json_file, count):
     recommendation = []
     index = []
     output = {}
     for key in json_file:
-        prices = factors.get_price_values(key,epoch_2017,epoch_today)
-        value = (prices[-1]-prices[-2])/prices[-2]
+        prices = factors.get_price_values(key, epoch_2017, epoch_today)
+        value = (prices[-1] - prices[-2]) / prices[-2]
         if len(recommendation) < count:
             recommendation.append(value)
             index.append(key)
@@ -140,8 +144,6 @@ def top_performers(json_file, count):
     for i in index:
         output[i] = json_file[i]
     return output
-
-
 
 
 def populate(stocks, data, correct_values, json, bool):
@@ -172,7 +174,8 @@ def load_json(data, correct_values, learning_rate, json, json_file):
 
     return json_file
 
-def recommendations(json_file,count):
+
+def recommendations(json_file, count):
     recommendation = []
     index = []
     output = {}
@@ -193,7 +196,6 @@ def recommendations(json_file,count):
 
 
 if __name__ == '__main__':
-
     app.run(debug=True, host='0.0.0.0')
     # data = []
     # stocks = load_stocks('data/s&p500_stock_names.txt')
@@ -203,7 +205,7 @@ if __name__ == '__main__':
     # learning_rate = .5
     # json_file, json, data, correct_values = ({}, {}, [], [])
     # data, correct_values, json = populate(stocks, data, correct_values, json, False)
-    #json_file = load_json(data, correct_values, learning_rate, json, json_file)
+    # json_file = load_json(data, correct_values, learning_rate, json, json_file)
     ##json, data, correct_values = ({}, [], [])
     ##data, correct_values, json = populate(crypto, data, correct_values, json, True)
     ##json_file = load_json(data, correct_values, learning_rate, json, json_file)
