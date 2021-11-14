@@ -141,9 +141,16 @@ def load_json(data, correct_values, learning_rate, json, json_file):
 
     return json_file
 
-def reccomendations(json_file):
-    for key , value in json_file
-
+def recommendations(json_file):
+    sorted_dict = {k: v for k, v in sorted(json_file.items(), key=lambda item: item['Sigma Value'])}
+    i = 0
+    result = {}
+    for key in sorted_dict.keys():
+        if i == 3: # change 3 to be however many i wanted
+            break
+        result[key] = sorted_dict[key]
+    return result
+    
 if __name__ == '__main__':
     #    app.run(debug=True, host='0.0.0.0')
     data = []
