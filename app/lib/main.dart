@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 void main() {
   runApp(const MyApp());
@@ -158,12 +159,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         width: MediaQuery.of(context).size.width * 0.4,
                         child: ElevatedButton(
                             onPressed: () {
-                              if (_emailController.text.isNotEmpty &&
-                                  _emailController.text.contains("@") &&
-                                  _passwordController.text.isNotEmpty) {
-                                Navigator.pushReplacementNamed(
-                                    context, '/home');
-                              }
+                              Navigator.pushReplacementNamed(context, '/home');
                             },
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
