@@ -17,6 +17,10 @@ def get_price_values(ticker, from_epoch, to_epoch):
     return finnhub_client.stock_candles(ticker, 'D', from_epoch, to_epoch)['c']
 
 
+def get_volume_values(ticker, from_epoch, to_epoch):
+    return finnhub_client.stock_candles(ticker, 'D', from_epoch, to_epoch)['v']
+
+
 def get_stock_fear_indices(from_epoch, to_epoch):
     return [dummy_value] * dummy_length
 
@@ -71,3 +75,7 @@ def get_reddit_values(ticker, from_epoch, to_epoch):
 
 def get_volatility_values(ticker, from_epoch, to_epoch):
     return [dummy_value] * dummy_length
+
+def get_market_cap_and_logo(ticker):
+    market_cap = finnhub_client.company_profile2(symbol=ticker)
+    return (market_cap['marketCapitalization'],market_cap['logo'],market_cap['name'])

@@ -122,6 +122,12 @@ def load_json(data, correct_values, learning_rate, json, json_file):
         json_file[ticker] = {}
         json_file[ticker]['Market Prediction'] = classify
         json_file[ticker]['Sigma Value'] = percentage
+        json_file[ticker]['Volume'] = factors.get_volume_values(ticker, epoch_2017, epoch_today)[-1]
+        marketcap, logo, name = factors.get_market_cap_and_logo(ticker)
+        json_file[ticker]['Market Cap'] = marketcap
+        json_file[ticker]['Logo'] = logo
+        json_file[ticker]['Name'] = name
+
     return json_file
 if __name__ == '__main__':
     #    app.run(debug=True, host='0.0.0.0')
