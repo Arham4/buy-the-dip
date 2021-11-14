@@ -85,7 +85,7 @@ def get_stochastic_indices(ticker, from_epoch, to_epoch):
     return stochastic_datum[-1]
 
 
-def get_recent_stochastic_indices(ticker, from_epoch):
+def get_recent_stochastic_index(ticker, from_epoch):
     stochastic_datum = get_stochastic_indices(ticker, from_epoch, epoch_today)
     return stochastic_datum[-1]
 
