@@ -99,6 +99,8 @@ def get_reddit_values(ticker, from_epoch, to_epoch):
     if ticker not in reddit_sentiment:
         return [dummy_value] * dummy_length
     else:
+        while len(reddit_sentiment[ticker]) < dummy_length:
+            reddit_sentiment[ticker].insert(0, dummy_value)
         return reddit_sentiment[ticker]
 
 
