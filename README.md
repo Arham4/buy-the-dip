@@ -2,7 +2,7 @@
 
 Buy the Dip is a stock prediction app using Python flask for the backend and Google Flutter for the frontend. Using a trained neural network, the app recommends buy, hold, or sell signals for stocks. The factors involved are:
 - CNN's Fear and Greed Index
-  - Supper for Alternative's Bitcoin Fear and Greed Index  
+  - Support for Alternative's Bitcoin Fear and Greed Index  
 - Technical indicators
   - RSI
   - Slow stochastic
